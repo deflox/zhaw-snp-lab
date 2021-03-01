@@ -47,14 +47,38 @@ Wenn der durch die Variable $p angegebene Ordnerpfad existiert und Ausführrecht
 existieren.
 
 24:
+find 
+	-L "$p" 		# symbolische links sollen verfolgt werden, heisst nicht
+				# der link soll untersucht werden, sondern das file hinter
+				# hinter dem link
+	-maxdepth 1 		# suche nur in maximaler tiefe 1
+	-type f 		# suche nach dem typ f für "file"
+	-executable 		# grenze nur ausführbare files ein
+	-printf "$i:%h:%f\n" 	# alle ausgaben des resultats des find commands durchlaufen
+				# erst diese -printf anweisung, welche den output entsprechend
+				# formatiert, dabei stellen %h und %f platzhalter dar, %h
+				# steht für das "leading directory" des gefundenen files und
+				# %f für den namen des files selbst
+	2>/dev/null		# alle errors sollen verschluckt werden
+
+Was bedeuted der printf Format String?
+
+Was bedeuted 2>/dev/null?
+2> ist der stderr und mittels >/dev/null werden alle Fehlermeldungen verschluckt.
 
 Aufgabe 5.1:
 ./get-exec-list-arg.sh $PWD | ./tab2html.sh > out.html && firefox out.html
 
 
 Aufgabe 5.2:
-./get-exec-list-arg.sh $PWD | cut -d: -f1,2,3 | sort -u -n
+./get-exec-list-arg.sh $PWD | cut -d: -f1,2 | sort -u -n
 
-Spalten können Variabel sein -> zuerst wird das Skript ausgeführt, dann wird gecuttet mit einem neuen Delimiter (:) und den Spalten (f1-3, anpassbar) und danach unique und numerisch sortiert
-
-sort -u => 3 Elemente, sort -u -n => oberstes Element (noch offen: numeric value für Text?)
+1. Zuerst wird das Scripts ausgeführt
+2. Der Cut Befehl ermöglicht das Ausschneiden von Elementen pro Zeile
+   -> es wird als delimiter das ":"-Zeichen verwendet
+   -> somit ergeben sich drei Elemente pro Zeile, von welchen wir aber nur die ersten
+      zwei behalten wollen
+   -> schliesslich wird sort aufgerufen, -u steht für unique, also doppelte elemente
+      werden eliminiert und -n für numeric, also es wird numerisch sortiert
+      es gibt somit nur noch ein element weil wenn der filename gelöscht wird am schluss
+      sehen die drei Zeilen genau gleich aus
