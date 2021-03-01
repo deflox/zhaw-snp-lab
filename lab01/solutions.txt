@@ -1,0 +1,60 @@
+Solutions for lab01:
+
+Generelle Bemerkungen:
+- Im Script wird i immer wieder neu gesetzt, agiert also gar nicht als counter.
+
+Aufgabe 4.1:
+1:/home/vagrant/snp/P01_Bash:tab2xml.sh
+1:/home/vagrant/snp/P01_Bash:tab2html.sh
+1:/home/vagrant/snp/P01_Bash:get-exec-list-arg.sh
+
+Aufgabe 4.2:
++ path=/home/vagrant/snp/P01_Bash
++ '[' -n /home/vagrant/snp/P01_Bash ']'
++ IFS=:
++ for p in $path
++ i=1
++ '[' -n /home/vagrant/snp/P01_Bash ']'
++ '[' -d /home/vagrant/snp/P01_Bash ']'
++ '[' -x /home/vagrant/snp/P01_Bash ']'
++ find -L /home/vagrant/snp/P01_Bash -maxdepth 1 -type f -executable -printf '1:%h:%f\n'
+1:/home/vagrant/snp/P01_Bash:tab2xml.sh
+1:/home/vagrant/snp/P01_Bash:tab2html.sh
+1:/home/vagrant/snp/P01_Bash:get-exec-list-arg.sh
+
+Aufgabe 4.4:
+
+12:
+Falls kein Argument übergeben wird, dann wird der Inhalt der Variable leer sein.
+
+13:
+Die Bedingung -n gibt true zurück, falls der Wert von "$path" nicht null ist.
+Falls der Wert nun Null ist, dann wird false zurückgegeben und beim logischen oder muss
+somit die zweite Expression evaluiert werden und somit wird das zweite Kommando ausgeführt.
+
+18:
+Der Loop wird drei Mal ausgeführt, da mittels IFS das Trennzeichen ":" definiert wird.
+
+20:
+Arithmetische Ausdrücke müssen mit doppelten Klammern umschlossen werden, damit diese als
+solche behandlet werden.
+
+21:
+p bleibt abc, da -n true zurückgibt, falls der Inhalt nicht Null ist. Da in diesem Fall der Wert abc in der Variable p steht, wird die zweite Expression beim logischen oder nicht ausgeführt.
+
+22:
+Wenn der durch die Variable $p angegebene Ordnerpfad existiert und Ausführrechte auf diesem
+existieren.
+
+24:
+
+Aufgabe 5.1:
+./get-exec-list-arg.sh $PWD | ./tab2html.sh > out.html && firefox out.html
+
+
+Aufgabe 5.2:
+./get-exec-list-arg.sh $PWD | cut -d: -f1,2,3 | sort -u -n
+
+Spalten können Variabel sein -> zuerst wird das Skript ausgeführt, dann wird gecuttet mit einem neuen Delimiter (:) und den Spalten (f1-3, anpassbar) und danach unique und numerisch sortiert
+
+sort -u => 3 Elemente, sort -u -n => oberstes Element (noch offen: numeric value für Text?)
