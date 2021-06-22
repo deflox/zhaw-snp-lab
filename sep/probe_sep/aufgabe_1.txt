@@ -1,0 +1,19 @@
+a)
+
+Inhalt [HEX]: 0 0 0
+
+b)
+
+Inhalt [HEX]: 0 0 0x50
+
+c)
+
+Inhalt [HEX]: 0x53 0 0x50
+
+d)
+
+Inhalt [HEX]: 0x53 0x53 0x50
+
+e)
+
+Inhalt [CHAR]: S S P
